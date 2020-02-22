@@ -107,4 +107,3 @@ export const populateFields = (formData, fields) => {
 
     return formData;
 }
-
