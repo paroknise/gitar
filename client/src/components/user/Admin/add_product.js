@@ -3,6 +3,7 @@ import UserLayout from '../../../hoc/user'
 
 import FormField from '../../utils/Form/formfield'
 import { update, generateData, isFormValid, populateOptionFields, resetFields } from '../../utils/Form/formActions';
+import FileUpload from '../../utils/Form/fileupload';
 
 import {connect} from 'react-redux'
 import { getBrands, getWoods, addProduct, clearProduct } from '../../../actions/products_actions'
@@ -174,7 +175,7 @@ class AddProduct extends Component {
                 validationMessage:'',
                 showlabel: true
             },
-            images:{
+            images:{ 
                 value:[],
                 validation:{
                     required: false
@@ -204,7 +205,7 @@ class AddProduct extends Component {
 
     resetFieldHandler = () => {
         const newFormData = resetFields(this.state.formdata);
-        
+
         this.setState({
             formdata: newFormData,
             formSuccess:true
@@ -212,11 +213,11 @@ class AddProduct extends Component {
         setTimeout(()=>{
             this.setState({
                 formSuccess: false
+            },()=>{
+                this.props.dispatch(clearProduct())
             })
-
         },3000)
     }
-
 
     submitForm= (event) =>{
         event.preventDefault();
@@ -253,6 +254,20 @@ class AddProduct extends Component {
             this.updateFields(newFormData)
         })
     }
+
+    imagesHandler = (images) => {
+        const newFormData = {
+            ...this.state.formdata
+        }
+        newFormData['images'].value = images;
+        newFormData['images'].value = true;
+
+        this.setState({
+            formdata: newFormData
+        })
+
+    }
+
     render() {
         return (
         <UserLayout>
@@ -260,6 +275,12 @@ class AddProduct extends Component {
                 <h1>Add Product</h1>
 
                 <form onSubmit={(event)=> this.submitForm(event)}>
+
+                    <FileUpload
+                        imagesHandler={(images)=> this.imagesHandler(images)}
+                        reset={this.state.formSuccess}
+
+                    />
                     <FormField
                             id={'name'}
                             formdata={this.state.formdata.name}

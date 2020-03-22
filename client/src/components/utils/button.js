@@ -32,6 +32,17 @@ const MyButton = (props) => {
                         />
                     </div>
             break;
+            case "add_to_cart_link":
+                template = 
+                <div className="add+to_cart_link"
+                onClick={()=>{
+                    props.runAction();
+                }}
+            >
+                
+            </div>
+            break;
+
             default:
                 template='';
         }
