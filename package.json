@@ -30,6 +30,9 @@
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
+  "engines": {
+    "node":"10.16.3"
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
